@@ -12,10 +12,10 @@ app.use(express.json())
 app.use(express.static("public"))
 
 const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'listso',
+  host: 'bolroqrdsgufuzxnlyfg-mysql.services.clever-cloud.com',
+  user: 'uqidszn9uhse3qzw',
+  password: 'vFc78iGoMAGKeCxzTpHI',
+  database: 'bolroqrdsgufuzxnlyfg',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
