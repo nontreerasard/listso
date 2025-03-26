@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List SO</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <script src="checkAuth.js"></script>
+    <h1>List SO</h1>
+    <div class="search-container">
+        <button id="addData" class="btn btn-add">เพิ่มรายการ</button>
+        <div class="search-container">
+            <div>
+                <label for="searchMain">ค้นหารายการหลัก:
+                    <input type="text" id="searchMain" name="searchMain">
+                </label>
+            </div>
+            <div>
+                <label for="searchDetails">ค้นหารายการย่อย:
+                    <input type="text" id="searchDetails" name="searchDetails">
+                </label>
+            </div>
+        </div>
+    </div>
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Actions</th>
+                <th>SO/File</th>
+                <th>Customer Service</th>
+                <th>Project</th>
+                <th>Product</th>
+                <th>Job Type</th>
+                <th>Sale</th>
+                <th>SO Receive Date</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Process Date</th>
+                <th>SO Status</th>
+                <th>Remark</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody id="mysqlData">
+        </tbody>
+    </table>
+
+    <div id="pagination" class="pagination-controls"></div>
+
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalDetails"></div>
+        </div>
+    </div>
+
+    <div id="addEntryModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">เพิ่มรายการ</h2>
+            <form id="addEntryForm">
+                <input type="hidden" id="entryType" name="entryType" value="main">
+                <input type="hidden" id="mainEntryId" name="mainEntryId" value="">
+                
+                <label for="soFile">SO/File:</label>
+                <input type="text" id="soFile" name="soFile" required><br>
+    
+                <label for="customerService">Customer Service:</label>
+                <input type="text" id="customerService" name="customerService" required><br>
+    
+                <label for="project">Project:</label>
+                <input type="text" id="project" name="project" required><br>
+    
+                <label for="product">Product:</label>
+                <input type="text" id="product" name="product" required><br>
+    
+                <label for="jobType">Job Type:</label>
+                <input type="text" id="jobType" name="jobType" required><br>
+    
+                <label for="sale">Sale:</label>
+                <input type="text" id="sale" name="sale" required><br>
+    
+                <label for="soReceiveDate">SO Receive Date:</label>
+                <input type="date" id="soReceiveDate" name="soReceiveDate" required><br>
+    
+                 <label for="startDate">Start Date:</label>
+                 <input type="date" id="startDate" name="startDate"><br>
+    
+                 <label for="endDate">End Date:</label>
+                 <input type="date" id="endDate" name="endDate"><br>
+    
+                 <label for="processDate">Process Date:</label>
+                 <input type="date" id="processDate" name="processDate"><br>
+    
+                <label for="soStatus">SO Status:</label>
+                <select id="soStatus" name="soStatus">
+                  <option value="">-- Select Status --</option>
+                  <option value="New">New</option>
+                  <option value="Processing">Processing</option>
+                  <option value="In Processing">In Processing</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Renew">Renew</option>
+                  <option value="Cancel">Cancel</option>
+                </select><br>
+
+                 <label for="remark">Remark:</label>
+                 <textarea id="remark" name="remark"></textarea><br>
+    
+                 <label for="price">Price:</label>
+                 <input type="number" id="price" name="price" step="0.01"><br>
+    
+                <button type="submit">เพิ่ม</button>
+            </form>
+        </div>
+    </div>
+    
+    <div id='editModal' class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>แก้ไขข้อมูล</h2>
+            <form id="editEntryForm" class="entry-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editSoFile">SO/File:</label>
+                        <input type="text" id="editSoFile" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCustomerService">Customer Service:</label>
+                        <input type="text" id="editCustomerService" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editProject">Project:</label>
+                        <input type="text" id="editProject">
+                    </div>
+                    <div class="form-group">
+                        <label for="editProduct">Product:</label>
+                        <input type="text" id="editProduct">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editJobType">Job Type:</label>
+                        <input type="text" id="editJobType">
+                    </div>
+                    <div class="form-group">
+                        <label for="editSale">Sale:</label>
+                        <input type="text" id="editSale">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editSoReceiveDate">SO Receive Date:</label>
+                        <input type="date" id="editSoReceiveDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="editStartDate">Start Date:</label>
+                        <input type="date" id="editStartDate">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editEndDate">End Date:</label>
+                        <input type="date" id="editEndDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="editProcessDate">Process Date:</label>
+                        <input type="date" id="editProcessDate">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editSoStatus">SO Status:</label>
+                        <select id="editSoStatus">
+                            <option value="">เลือกสถานะ</option>
+                            <option value="Processing">Processing</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Renew">Renew</option>
+                            <option value="New">New</option>
+                            <option value="Cancel">Cancel</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPrice">Price:</label>
+                        <input type="number" id="editPrice" step="0.01">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="editRemark">Remark:</label>
+                        <textarea id="editRemark" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">บันทึกการแก้ไข</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <button onclick="logout()" class="btn btn-danger">Logout</button>
+
+    <script>
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
